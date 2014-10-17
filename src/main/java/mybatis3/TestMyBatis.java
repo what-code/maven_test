@@ -30,28 +30,53 @@ public class TestMyBatis {
 		try {
 			String resource = "mybatis3/config.xml";
 			InputStream inputStream = Resources.getResourceAsStream(resource);
-			sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+			sqlSessionFactory = new SqlSessionFactoryBuilder()
+					.build(inputStream);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
-	public List<Activity> selectAllStudent() {
-		List<Activity> students = null;
+	public List<Activity> selectAll() {
+		List<Activity> acts = null;
 		SqlSession session = sqlSessionFactory.openSession();
 		try {
-			students = session.selectList("selectAllAct");
+			acts = session.selectList("selectAllAct");
 		} finally {
-		  session.close();
+			session.close();
 		}
-		return students;
+		return acts;
 	}
 
-	public static void main(String[] args){
-		TestMyBatis tm = new TestMyBatis();
-		List<Activity> list = tm.selectAllStudent();
-		for(Activity s : list){
-			System.out.println("----s--->" + s.getActivityId() + "----->" + s.getActivityName() + "----->" + s.getActivityLargeImg());
+	public void update() {
+		SqlSession session = sqlSessionFactory.openSession();
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("name", "name_value001");
+		map.put("id", 1);
+
+		Activity act = new Activity();
+		act.setActivityId(1);
+		act.setActivityName("name_value");
+		try {
+			session.update("updateById01", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			// commit 不能少
+			session.commit();
+			session.close();
+			System.out.println("---finish upd---");
 		}
+	}
+
+	public static void main(String[] args) {
+		TestMyBatis tm = new TestMyBatis();
+		/*
+		 * List<Activity> list = tm.selectAll(); for(Activity s : list){
+		 * System.out.println("----s--->" + s.getActivityId() + "----->" +
+		 * s.getActivityName() + "----->" + s.getActivityLargeImg()); }
+		 */
+
+		tm.update();
 	}
 }

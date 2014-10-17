@@ -6,6 +6,15 @@
 	<select id="selectAllAct" resultMap="detailActivity">
 		select * from t_activity_base
 	</select>
+	
+	<update id="updateById" parameterType="mybatis3.Activity">
+		update t_activity_base  set activity_name=#{activityName} where activity_id=#{activityId}
+	</update>
+	
+	<update id="updateById01" parameterType="Map">
+		update t_activity_base  set activity_name=#{name} where activity_id=#{id}
+	</update>
+	
 	<resultMap id="detailActivity" type="Activity">
 		<result property="activityId" column="activity_id" />
 		<result property="activityName" column="activity_name" />

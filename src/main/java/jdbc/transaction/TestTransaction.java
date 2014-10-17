@@ -80,21 +80,25 @@ public class TestTransaction {
 			stmt = conn.createStatement();
 			stmt1 = conn.createStatement();
 			
-			//stmt.execute("insert into test03 values (1,1,'test','apple','test','apple','test','apple','1')");
-			//stmt1.execute("insert into test03 values (2,2,'test','apple','test','apple','test','apple','2')");
+			stmt.execute("insert into test03 values (1,1,'test','apple','test','apple','test','apple','1')");
+			stmt1.execute("insert into test03 values (2,2,'test','apple','test','apple','test','apple','2')");
 			
 			//stmt.execute("update test03 t set t.keyword_name = 'test01' where t.id=1");
-			ResultSet set = stmt.executeQuery("select code from union_resource;");
+			/*ResultSet set = stmt.executeQuery("select code from union_resource;");
 			while(set.next()){
 				System.out.println(set.getString(1));
-			}
+			}*/
+			
 			//TYPE1
-			conn.commit();
+			//conn.commit();
 			
 			//TYPE2
 			/*conn.rollback();
 			conn.commit();
 			conn.setAutoCommit(true);*/
+			
+			//TYPE3
+			conn.setAutoCommit(true);
 		} catch (Exception e) {
 			/*if (conn != null) {
 				try {
