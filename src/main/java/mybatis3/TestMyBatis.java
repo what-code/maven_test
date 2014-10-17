@@ -49,21 +49,24 @@ public class TestMyBatis {
 	}
 
 	public void update() {
-		SqlSession session = sqlSessionFactory.openSession();
+		SqlSession session = sqlSessionFactory.openSession(true);
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("name", "name_value001");
+		map.put("name", "name_value002");
 		map.put("id", 1);
 
 		Activity act = new Activity();
 		act.setActivityId(1);
 		act.setActivityName("name_value");
 		try {
+			//type1
+			session.update("updateById", act);
+			//type2
 			session.update("updateById01", map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			// commit 不能少
-			session.commit();
+			//session.commit();
 			session.close();
 			System.out.println("---finish upd---");
 		}
